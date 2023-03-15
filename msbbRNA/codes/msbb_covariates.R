@@ -1,8 +1,9 @@
 ###--msbb_covariates.R
-setwd("C:/Users/crgcomu/Desktop/Iman/Brain_meta/analysis_rawCount/disease_specific/AD_PA_CTL/bulk_analysis/replication_msbb/")
+setwd("C:/Users/crgcomu/Desktop/Iman/Brain_meta/projects/AD_sex_specific/msbbRNA/")
 
 #libraries
-
+table(datMeta$Dx,datMeta$Brain_Region,datMeta$Sex)
+datMeta = 
 ## load data ####
 load("./codes/MSBB_normalized.Rdata")
 colnames(datMeta)

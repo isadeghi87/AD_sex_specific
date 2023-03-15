@@ -86,23 +86,24 @@ if(T){
     
   }
   
+  ## filter spec modules
   attr.mod = tableSup[tableSup$mods %in% specMod,]
   manh.res$module = attr.mod$mods[match(manh.res$symbol,attr.mod$gene)]
   
-  # snp.res$module = attr.mod$mods[match(snp.res$symbol,attr.mod$gene)]
-  
+  ## manual colors
   colname = unique(names(mods[mods %in% specMod ]))
   names(colname) = unique(mods[mods %in% specMod ])
   
-  library(ggrepel)
-  pp = ggplot(manh.res,aes(x = Beta,y = -log10(P), fill = module))+
-    geom_point(shape = 21,color = "black",size =3)+
-    scale_fill_manual(values = colname)+
-    geom_text_repel(data = snp.res,aes(label = SNP ))+
-    theme_few()
-  
-  ggsave("./results/figures/network/topSNPs_mod.pdf",plot = pp,
-         width = 7,height = 4)
+  # library(ggrepel)
+  # pp = ggplot(manh.res,aes(x = Beta,y = -log10(P), fill = module))+
+  #   geom_point(shape = 21,color = "black",size =3)+
+  #   scale_fill_manual(values = colname)+
+  #   geom_text_repel(data = snp.res,aes(label = SNP ))+
+  #   theme_few()
+  # 
+  # ggsave("./results/figures/network/topSNPs_mod.pdf",plot = pp,
+  #        width = 7,height = 4)
+ write.table(manh.res,"./results/tables/network/topQTLs_mod.txt",sep = "\t")
   
   ## for M7 
   dat = manh.res[manh.res$module =="M7",]
@@ -114,6 +115,16 @@ if(T){
   ggsave("./results/figures/network/topSNPs_table.pdf",plot = p,
          width = 7,height = 4)
   
-  write.table(manh.res,"./results/tables/network/topQTLs_mod.txt",sep = "\t")
+  ## genes that are overlap between protein and RNA
+  ol = read.table("./results/tables/network/geneCard_AD_overlap.txt")
+  ol.qtl = manh.res[manh.res$symbol %in% ol$Gene.Symbol,]
+  write.table(ol.qtl)
+  ## gwas
+  # gwas = readxl::read_xlsx("C:/Users/crgcomu/Desktop/Iman/Brain_meta/data/gwas/AD_gwas_genes.xlsx",
+  #                          sheet = "Supplementary Table 8a",skip = 5) 
+  # gwas = gwas[gwas$`P-VALUE` < 5e-8,]## keep significants
+  # colnames(gwas)[1] = "symbol"
+  # ol.gwas= gwas[gwas$symbol %in% ol$Gene.Symbol, ]
+ 
   
 }  

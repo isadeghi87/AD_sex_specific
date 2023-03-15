@@ -118,6 +118,12 @@ if(T){
                                        grid.text(sym[i, j], x, y,gp = gpar(fontsize = 8))
                                    })
       
+      df = reshape2::melt(res.fdr)
+      colnames(df) = c("RNA","Protein","fdr")
+      df = df[df$fdr<0.05,]
+      write.csv("./results/tables/network/preservation/rosmap_rna_overlap.csv",x = df)
+      
+      
       pdf("./results/figures/network/preservation/rosmap_rna_overlap.pdf",
           width = 8, height = 6)
       draw(h1)

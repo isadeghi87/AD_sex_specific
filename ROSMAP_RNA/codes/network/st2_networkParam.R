@@ -144,7 +144,11 @@ if(T){
   kMEtable = signedKME(t(datExp),
                        MEs$eigengenes)
   tableSup = data.frame(kMEtable)
-  tableSup = cbind(data.frame(mods),gene,kMEtable)
+  attr = readRDS("C:/Users/crgcomu/Desktop/Iman/Brain_meta/annotation/gencode28_attributes.rds")
+  
+  tableSup = cbind(data.frame(mods),rownames(datExp),kMEtable)
+  colnames(tableSup)[1:2] = c("mods","gene")
+  
   write.csv(file="./results/tables/network/Modules_kMEtable.csv", tableSup)
   
   save(file = "./data/network/parameters/finalNetwork.RData",
